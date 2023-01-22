@@ -1,9 +1,22 @@
 import React, {useState ,useEffect} from 'react';
 import { Card, FormField, Loader } from '../components';
 
+
+const RenderCards = ({data ,title})=> {
+    if(data ?.length > 0) {
+        return (data.map((post) => <Card key={post._id} {...post} /> ))
+    }
+    return (
+        <h2 className="mt-5 text-xl uppercase font-bold text-[#6449ff]">{title}</h2>
+    )
+}
+
+
 const Home = () => {
     const [loading,setLoading] = useState(false);
-    const [allPosts,setAllPosts] = useState(null);    
+    const [allPosts,setAllPosts] = useState(null); 
+    
+    const [searchText,setSearchText] = useState('meera');
 
   return (
    <section className="max-w-7xl mx-auto">
@@ -23,7 +36,23 @@ const Home = () => {
             </div>
         ) : (
             <>
-            
+            {searchText && (
+                <h2 className="font-medium text-gray-800 text-xl mb-3">
+                    Showing results for <span className="text-[#222328]">
+                        {searchText}</span> 
+                </h2>
+            )}
+            <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 gap-3">
+                {searchText ? (
+                    <RenderCards 
+                    data={[]}
+                    title="No search results found" />
+                ) : (
+                    <RenderCards 
+                    data={[]}
+                    title="No pots found" />
+                ) }
+            </div>
             </>
         )}
     </div>
